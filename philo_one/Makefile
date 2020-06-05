@@ -24,8 +24,17 @@ $(NAME): $(OBJ)
 %.o: %.c
 	clang $(CFLAGS) -c $? -o $@
 
-test:
+test1:
+	./philo_one 5 800 200 200
+
+test2:
 	./philo_one 4 410 200 200
+
+test3:
+	./philo_one 4 310 200 100
+
+test4:
+	./philo_one 2 300 150 100
 
 clean:
 	$(RM) $(OBJ)
