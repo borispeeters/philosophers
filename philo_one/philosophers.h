@@ -14,34 +14,38 @@
 # define PHILOSOPHERS_H
 
 # include <pthread.h>
+# include <stdint.h>
 
 typedef struct		s_data
 {
-    int				philo_num;
-    int				die_time;
-    int				eat_time;
-    int				sleep_time;
+    int				philo_count;
+    uint64_t		die_time;
+    uint64_t		eat_time;
+    uint64_t		sleep_time;
     int				eat_num;
 	
-    pthread_mutex_t	*forks;
+    pthread_mutex_t	*fork_mutex;
+    int             *forks;
 	pthread_mutex_t	dead;
     pthread_mutex_t write_lock;
     int             isdead;
-    long			start_time;
+    uint64_t		start_time;
     // struct s_philo	*philo;
 }               	t_data;
 
 typedef struct      s_philo
 {
 	int				num;
-    long			last_eaten;
-	int				lfork;
-	int				rfork;
+    uint64_t		last_eaten;
+	int				lfork_i;
+	int				rfork_i;
+    int             lfork_bool;
+    int             rfork_bool;
     t_data          *data;
 }                   t_philo;
 
-size_t	ft_strlen(const char *s);
-int	    ft_atoi(const char *str);
-void    ft_putlong_fd(int n, int fd);
+size_t				ft_strlen(const char *s);
+uint64_t			ft_atoi(const char *str);
+void				ft_putlong_fd(uint64_t n, int fd);
 
 #endif

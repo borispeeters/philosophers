@@ -36,6 +36,9 @@ test3:
 test4:
 	./philo_one 2 300 150 100
 
+test:
+	./philo_one 4 210 100 100
+
 clean:
 	$(RM) $(OBJ)
 

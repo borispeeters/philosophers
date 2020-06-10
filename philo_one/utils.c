@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-int	ft_atoi(const char *str)
+uint64_t	ft_atoi(const char *str)
 {
 	int			i;
 	long long	ans;
@@ -56,7 +56,7 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-void	ft_putlong_fd(long n, int fd)
+void	ft_putlong_fd(uint64_t n, int fd)
 {
 	if (n < 0)
 	{
