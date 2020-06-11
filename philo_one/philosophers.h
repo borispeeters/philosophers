@@ -28,6 +28,7 @@ typedef struct		s_data
     int             *forks;
 	pthread_mutex_t	dead;
     pthread_mutex_t write_lock;
+    pthread_mutex_t eat_lock;
     int             isdead;
     uint64_t		start_time;
     // struct s_philo	*philo;

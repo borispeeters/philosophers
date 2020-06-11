@@ -34,7 +34,7 @@ test3:
 	./philo_one 4 310 200 100
 
 test4:
-	./philo_one 2 300 150 100
+	./philo_one 2 310 200 100
 
 test:
 	./philo_one 4 210 100 100

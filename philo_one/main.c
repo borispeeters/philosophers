@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/20 04:31:14 by anonymous     #+#    #+#                 */
-/*   Updated: 2020/06/10 08:47:39 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/06/11 11:32:01 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,59 @@ void	*monitor(void *v_philo)
 	t_data		*data;
 	t_philo		*philo;
 	uint64_t	cur_time;
-
+	
 	philo = (t_philo*)v_philo;
 	data = philo->data;
 	while (!data->isdead)
 	{
+		pthread_mutex_lock(&data->eat_lock);
 		cur_time = get_time();
-		// printf("\n\nget_time() = %llu, last_eaten = %llu\n\n", get_time(), philo->last_eaten);
-		if ((cur_time - philo->last_eaten) > data->die_time)
+		if ((get_time() - philo->last_eaten) > data->die_time)
 		{
-			philo_write(philo, "lol\n");
-			printf("\n\ncur_time = %llu, last_eaten = %llu, die_time = %llu\n\n", cur_time, philo->last_eaten, data->die_time);
-			printf("\n\ncur_time - last_eaten = %llu\n\n", cur_time - philo->last_eaten);
-			pthread_mutex_lock(&data->dead);
+			// pthread_mutex_lock(&data->dead);
 			philo_write(philo, "died\n");
 			data->isdead = 1;
-			pthread_mutex_unlock(&data->dead);
+			// pthread_mutex_unlock(&data->dead);
 		}
-		// usleep(100);
+		pthread_mutex_unlock(&data->eat_lock);
+		usleep(100);
 	}
 	return (NULL);
+}
+
+void	ft_usleep(uint64_t wait_time)
+{
+	uint64_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < wait_time)
+		usleep(100);
+}
+
+void	philo_take_fork(t_philo *philo, int ifork)
+{
+	if (pthread_mutex_lock(&(philo->data->fork_mutex[ifork])) != 0)
+		return ;
+	philo->data->forks[ifork] = 1;
+	philo_write(philo, "has taken a fork\n");
+}
+
+static int		min(int lfork, int rfork)
+{
+	if (lfork < rfork)
+		return lfork;
+	else
+		return rfork;
+	
+}
+
+static int		max(int lfork, int rfork)
+{
+	if (lfork > rfork)
+		return lfork;
+	else
+		return rfork;
+	
 }
 
 void	*philosopher(void *v_philo)
@@ -77,46 +110,62 @@ void	*philosopher(void *v_philo)
 	t_data		*data;
 	t_philo		*philo;
 	pthread_t	pid;
+	int	first_fork;
+	int	second_fork;
 
 	philo = (t_philo*)v_philo;
 	data = philo->data;
 	philo->last_eaten = get_time();
 	pthread_create(&pid, NULL, monitor, philo);
-	philo->lfork_bool = 0;
-	philo->rfork_bool = 0;
+	first_fork = min(philo->lfork_i, philo->rfork_i);
+	second_fork = max(philo->lfork_i, philo->rfork_i);;
 	philo_write(philo, "is thinking\n");
 	while (!data->isdead)
 	{
+		philo_take_fork(philo, first_fork);
+		philo_take_fork(philo, second_fork);
 
-		pthread_mutex_lock(&(data->fork_mutex[philo->lfork_i]));
-		if (data->forks[philo->lfork_i] == 0 && philo->lfork_bool == 0)
-		{
-			data->forks[philo->lfork_i] = 1;
-			philo->lfork_bool = 1;
-			philo_write(philo, "has taken a left fork\n");
-		}
-		pthread_mutex_unlock(&(data->fork_mutex[philo->lfork_i]));
-		pthread_mutex_lock(&(data->fork_mutex[philo->rfork_i]));
-		if (data->forks[philo->rfork_i] == 0 && philo->rfork_bool == 0)
-		{
-			data->forks[philo->rfork_i] = 1;
-			philo->rfork_bool = 1;
-			philo_write(philo, "has taken a right fork\n");
-		}
-		pthread_mutex_unlock(&(data->fork_mutex[philo->rfork_i]));
-		
-		if (philo->lfork_bool == 0 || philo->rfork_bool == 0)
-			continue ;
-
-		philo->last_eaten = get_time();
+		pthread_mutex_lock(&data->eat_lock);
 		philo_write(philo, "is eating\n");
-		usleep(data->eat_time * 1000);
-		data->forks[philo->lfork_i] = 0;
-		philo->lfork_bool = 0;
-		data->forks[philo->rfork_i] = 0;
-		philo->rfork_bool = 0;
+		philo->last_eaten = get_time();
+		pthread_mutex_unlock(&data->eat_lock);
+		// usleep(data->eat_time * 1000);
+		ft_usleep(data->eat_time);
+
+		pthread_mutex_unlock(&(data->fork_mutex[first_fork]));
+		pthread_mutex_unlock(&(data->fork_mutex[second_fork]));
+		
+		// pthread_mutex_lock(&(data->fork_mutex[philo->lfork_i]));
+		// if (data->forks[philo->lfork_i] == 0 && philo->lfork_bool == 0)
+		// {
+		// 	data->forks[philo->lfork_i] = 1;
+		// 	philo->lfork_bool = 1;
+		// 	philo_write(philo, "has taken a left fork\n");
+		// }
+		// pthread_mutex_unlock(&(data->fork_mutex[philo->lfork_i]));
+		// pthread_mutex_lock(&(data->fork_mutex[philo->rfork_i]));
+		// if (data->forks[philo->rfork_i] == 0 && philo->rfork_bool == 0)
+		// {
+		// 	data->forks[philo->rfork_i] = 1;
+		// 	philo->rfork_bool = 1;
+		// 	philo_write(philo, "has taken a right fork\n");
+		// }
+		// pthread_mutex_unlock(&(data->fork_mutex[philo->rfork_i]));
+		
+		// if (philo->lfork_bool == 0 || philo->rfork_bool == 0)
+		// 	continue ;
+
+		// pthread_mutex_lock(&(data->fork_mutex[philo->lfork_i]));
+		// pthread_mutex_lock(&(data->fork_mutex[philo->rfork_i]));
+		// data->forks[philo->lfork_i] = 0;
+		// philo->lfork_bool = 0;
+		// data->forks[philo->rfork_i] = 0;
+		// philo->rfork_bool = 0;
+		// pthread_mutex_unlock(&(data->fork_mutex[philo->lfork_i]));
+		// pthread_mutex_unlock(&(data->fork_mutex[philo->rfork_i]));
 		philo_write(philo, "is sleeping\n");
-		usleep(data->sleep_time * 1000);
+		// usleep(data->sleep_time * 1000);
+		ft_usleep(data->sleep_time);
 		philo_write(philo, "is thinking\n");
 	}
 	pthread_join(pid, NULL);
@@ -190,6 +239,7 @@ int	main(int argc, char **argv)
 		}
 		pthread_mutex_init(&data.write_lock, NULL);
 		pthread_mutex_init(&data.dead, NULL);
+		pthread_mutex_init(&data.eat_lock, NULL);
 		philo_threads(&data);
 		int i = 0;
 		while (i < data.philo_count)
@@ -197,6 +247,7 @@ int	main(int argc, char **argv)
 			pthread_mutex_destroy(&(data.fork_mutex[i]));
 			++i;
 		}
+		pthread_mutex_destroy(&data.eat_lock);
 		pthread_mutex_destroy(&data.dead);
 		pthread_mutex_destroy(&data.write_lock);
         return (0);
