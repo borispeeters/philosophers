@@ -117,8 +117,8 @@ void	*philosopher(void *v_philo)
 	data = philo->data;
 	philo->last_eaten = get_time();
 	pthread_create(&pid, NULL, monitor, philo);
-	first_fork = min(philo->lfork_i, philo->rfork_i);
-	second_fork = max(philo->lfork_i, philo->rfork_i);;
+	first_fork = min(philo->lfork, philo->rfork);
+	second_fork = max(philo->lfork, philo->rfork);
 	philo_write(philo, "is thinking\n");
 	while (!data->isdead)
 	{
@@ -129,42 +129,13 @@ void	*philosopher(void *v_philo)
 		philo_write(philo, "is eating\n");
 		philo->last_eaten = get_time();
 		pthread_mutex_unlock(&data->eat_lock);
-		// usleep(data->eat_time * 1000);
 		ft_usleep(data->eat_time);
 
 		pthread_mutex_unlock(&(data->fork_mutex[first_fork]));
 		pthread_mutex_unlock(&(data->fork_mutex[second_fork]));
-		
-		// pthread_mutex_lock(&(data->fork_mutex[philo->lfork_i]));
-		// if (data->forks[philo->lfork_i] == 0 && philo->lfork_bool == 0)
-		// {
-		// 	data->forks[philo->lfork_i] = 1;
-		// 	philo->lfork_bool = 1;
-		// 	philo_write(philo, "has taken a left fork\n");
-		// }
-		// pthread_mutex_unlock(&(data->fork_mutex[philo->lfork_i]));
-		// pthread_mutex_lock(&(data->fork_mutex[philo->rfork_i]));
-		// if (data->forks[philo->rfork_i] == 0 && philo->rfork_bool == 0)
-		// {
-		// 	data->forks[philo->rfork_i] = 1;
-		// 	philo->rfork_bool = 1;
-		// 	philo_write(philo, "has taken a right fork\n");
-		// }
-		// pthread_mutex_unlock(&(data->fork_mutex[philo->rfork_i]));
-		
-		// if (philo->lfork_bool == 0 || philo->rfork_bool == 0)
-		// 	continue ;
 
-		// pthread_mutex_lock(&(data->fork_mutex[philo->lfork_i]));
-		// pthread_mutex_lock(&(data->fork_mutex[philo->rfork_i]));
-		// data->forks[philo->lfork_i] = 0;
-		// philo->lfork_bool = 0;
-		// data->forks[philo->rfork_i] = 0;
-		// philo->rfork_bool = 0;
-		// pthread_mutex_unlock(&(data->fork_mutex[philo->lfork_i]));
-		// pthread_mutex_unlock(&(data->fork_mutex[philo->rfork_i]));
+
 		philo_write(philo, "is sleeping\n");
-		// usleep(data->sleep_time * 1000);
 		ft_usleep(data->sleep_time);
 		philo_write(philo, "is thinking\n");
 	}
@@ -190,8 +161,8 @@ void	philo_threads(t_data *data)
 	{
 		philo[i].data = data;
 		philo[i].num = i + 1;
-		philo[i].lfork_i = i;
-		philo[i].rfork_i = (i + 1) % data->philo_count;
+		philo[i].lfork = i;
+		philo[i].rfork = (i + 1) % data->philo_count;
 		++i;
 	}
 	i = 0;

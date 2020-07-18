@@ -38,10 +38,8 @@ typedef struct      s_philo
 {
 	int				num;
     uint64_t		last_eaten;
-	int				lfork_i;
-	int				rfork_i;
-    int             lfork_bool;
-    int             rfork_bool;
+	int				lfork;
+	int				rfork;
     t_data          *data;
 }                   t_philo;
 
