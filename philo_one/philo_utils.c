@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:42:52 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/19 16:46:52 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/20 00:33:16 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,10 @@ void	ft_usleep(uint64_t wait_time)
 
 int		min(int lfork, int rfork)
 {
-	if (lfork < rfork)
-		return (lfork);
-	return (rfork);
+	return (lfork < rfork ? lfork : rfork);
 }
 
 int		max(int lfork, int rfork)
 {
-	if (lfork > rfork)
-		return (lfork);
-	return (rfork);
+	return (lfork > rfork ? lfork : rfork);
 }
