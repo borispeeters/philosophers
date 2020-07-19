@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: anonymous <anonymous@student.codam.nl>       +#+                     */
+/*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/20 00:26:26 by anonymous      #+#    #+#                */
-/*   Updated: 2020/03/20 00:26:26 by anonymous     ########   odam.nl         */
+/*   Created: 2020/07/19 10:58:36 by bpeeters      #+#    #+#                 */
+/*   Updated: 2020/07/19 10:58:36 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ uint64_t	ft_atoi(const char *str)
 	return (ans * ncheck);
 }
 
-size_t	ft_strlen(const char *s)
+size_t		ft_strlen(const char *s)
 {
 	size_t i;
 
@@ -51,12 +51,12 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	ft_putchar_fd(char c, int fd)
+void		ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }
 
-void	ft_putlong_fd(uint64_t n, int fd)
+void		ft_putlong_fd(uint64_t n, int fd)
 {
 	if (n < 0)
 	{
