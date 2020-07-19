@@ -16,25 +16,31 @@
 # include <pthread.h>
 # include <stdint.h>
 
+typedef enum		e_state
+{
+	ALIVE,
+	DEAD
+}					t_state;
+
 typedef struct		s_data
 {
 	int				philo_count;
 	uint64_t		die_time;
 	uint64_t		eat_time;
 	uint64_t		sleep_time;
-	int				eat_num;
+	int				amount_to_eat;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	eat_lock;
-	int				isdead;
+	t_state			state;
 	uint64_t		start_time;
 }					t_data;
 
 typedef struct		s_philo
 {
-	int				num;
+	int				number;
 	uint64_t		last_eaten;
-	int				eaten;
+	int				amount_eaten;
 	int				lfork;
 	int				rfork;
 	t_data			*data;
@@ -66,13 +72,14 @@ void				destroy_mutexes(t_data *data);
 */
 
 int					initialize_philo(t_data *data, t_philo **philo, pthread_t **pt);
-void				initialize_data(t_data *data, char **argv, int eat_condition);
+int					initialize_data(t_data *data, char **argv, int eat_condition);
 
 /*
 **	philo_write.c
 */
 
 void				philo_write(t_philo *philo, char *str);
+void				unlocked_message(char const *str);
 
 /*
 **	philo_eat.c
@@ -93,5 +100,11 @@ void				philo_threads(t_data *data, t_philo *philo, pthread_t *pt);
 void				ft_usleep(uint64_t wait_time);
 int					min(int lfork, int rfork);
 int					max(int lfork, int rfork);
+
+/*
+**	free_philo.c
+*/
+
+void				free_philo(t_data *data, t_philo **philo, pthread_t **pt);
 
 #endif

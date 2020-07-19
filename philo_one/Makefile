@@ -12,7 +12,7 @@
 
 NAME = philo_one
 SRC = main.c philosophers.c philo_eat.c philo_write.c philo_utils.c \
-		mutex.c get_time.c initialize.c utils.c
+		mutex.c get_time.c initialize.c free_philo.c utils.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 .PHONY: clean fclean re

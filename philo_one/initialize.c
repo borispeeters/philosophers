@@ -6,19 +6,12 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:30:45 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/19 16:32:19 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/20 00:28:56 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 #include <stdlib.h>
-
-static void	free_philo(t_data *data, t_philo **philo, pthread_t **pt)
-{
-	free(*pt);
-	free(data->fork_mutex);
-	free(*philo);
-}
 
 int			initialize_philo(t_data *data, t_philo **philo, pthread_t **pt)
 {
@@ -36,24 +29,45 @@ int			initialize_philo(t_data *data, t_philo **philo, pthread_t **pt)
 	while (i < data->philo_count)
 	{
 		(*philo)[i].data = data;
-		(*philo)[i].num = i + 1;
+		(*philo)[i].number = i + 1;
 		(*philo)[i].lfork = i;
 		(*philo)[i].rfork = (i + 1) % data->philo_count;
-		(*philo)[i].eaten = 0;
+		(*philo)[i].amount_eaten = 0;
 		++i;
 	}
 	return (0);
 }
 
-void		initialize_data(t_data *data, char **argv, int eat_condition)
+static int	verify_data(t_data *data, int eat_condition)
+{
+	if (data->philo_count < 2)
+	{
+		unlocked_message("At least 2 philosophers are required.");
+		return (-1);
+	}
+	if (data->die_time <= 0 || data->eat_time <= 0 || data->sleep_time <= 0)
+	{
+		unlocked_message("Please enter a positive timestamp.");
+		return (-1);
+	}
+	if (eat_condition && data->amount_to_eat < 0)
+	{
+		unlocked_message("A philosopher needs to eat a positive amount.");
+		return (-1);
+	}
+	return (0);
+}
+
+int			initialize_data(t_data *data, char **argv, int eat_condition)
 {
 	data->start_time = get_time();
-	data->isdead = 0;
+	data->state = ALIVE;
 	data->philo_count = ft_atoi(argv[1]);
 	data->die_time = ft_atoi(argv[2]);
 	data->eat_time = ft_atoi(argv[3]);
 	data->sleep_time = ft_atoi(argv[4]);
-	data->eat_num = -1;
+	data->amount_to_eat = -1;
 	if (eat_condition)
-		data->eat_num = ft_atoi(argv[5]);
+		data->amount_to_eat = ft_atoi(argv[5]);
+	return (verify_data(data, eat_condition));
 }

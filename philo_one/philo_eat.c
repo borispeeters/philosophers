@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:38:34 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/19 16:39:30 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/19 23:36:58 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	philo_eat(t_philo *philo)
 	while (pthread_mutex_lock(&data->eat_lock) != 0)
 		continue ;
 	philo_write(philo, "is eating");
-	++philo->eaten;
+	++philo->amount_eaten;
 	philo->last_eaten = get_time();
 	while (pthread_mutex_unlock(&data->eat_lock) != 0)
 		continue ;

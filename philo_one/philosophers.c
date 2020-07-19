@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:40:27 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/19 16:46:15 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/20 00:17:23 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	*monitor(void *v_philo)
 
 	philo = (t_philo*)v_philo;
 	data = philo->data;
-	while (!data->isdead && philo->eaten != data->eat_num)
+	while (data->state == ALIVE && philo->amount_eaten != data->amount_to_eat)
 	{
 		while (pthread_mutex_lock(&data->eat_lock) != 0)
 			continue ;
@@ -30,7 +30,7 @@ static void	*monitor(void *v_philo)
 		if ((get_time() - philo->last_eaten) > data->die_time)
 		{
 			philo_write(philo, "died");
-			data->isdead = 1;
+			data->state = DEAD;
 		}
 		while (pthread_mutex_unlock(&data->eat_lock) != 0)
 			continue ;
@@ -50,7 +50,7 @@ static void	*philo_loop(void *v_philo)
 	philo->last_eaten = get_time();
 	while (pthread_create(&pid, NULL, monitor, philo) != 0)
 		continue ;
-	while (!data->isdead && philo->eaten != data->eat_num)
+	while (data->state == ALIVE && philo->amount_eaten != data->amount_to_eat)
 	{
 		philo_write(philo, "is thinking");
 		philo_eat(philo);
@@ -80,4 +80,6 @@ void	philo_threads(t_data *data, t_philo *philo, pthread_t *pt)
 			continue ;
 		++i;
 	}
+	if (data->state != DEAD)
+		unlocked_message("All philosophers have eaten enough!");
 }
