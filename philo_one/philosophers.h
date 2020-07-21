@@ -64,8 +64,8 @@ uint64_t			get_time(void);
 **	mutex.c
 */
 
-void				initiate_mutexes(t_data *data);
-void				destroy_mutexes(t_data *data);
+int					initiate_mutexes(t_data *data);
+void				destroy_mutexes(t_data *data, int length);
 
 /*
 **	initialize.c

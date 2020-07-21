@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 14:57:52 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/20 00:35:55 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/21 17:10:07 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int		main(int argc, char **argv)
 		write(2, "Failed to allocate memory\n", 26);
 		return (-1);
 	}
-	initiate_mutexes(&data);
-	philo_threads(&data, philo, pt);
-	destroy_mutexes(&data);
+	if (initiate_mutexes(&data) == 0)
+	{
+		philo_threads(&data, philo, pt);
+		destroy_mutexes(&data, data.philo_count);
+	}
 	free_philo(&data, &philo, &pt);
 	return (0);
 }

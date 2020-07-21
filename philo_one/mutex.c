@@ -6,43 +6,47 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:28:39 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/19 16:29:03 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/21 17:08:54 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 #include <pthread.h>
 
-void	initiate_mutexes(t_data *data)
+int		initiate_mutexes(t_data *data)
 {
 	int	i;
 
 	i = 0;
+	if (pthread_mutex_init(&data->write_lock, NULL) != 0)
+		return (-1);
+	if (pthread_mutex_init(&data->eat_lock, NULL) != 0)
+	{
+		pthread_mutex_destroy(&data->write_lock);
+		return (-1);
+	}
 	while (i < data->philo_count)
 	{
-		while (pthread_mutex_init(&(data->fork_mutex[i]), NULL) != 0)
-			continue ;
+		if (pthread_mutex_init(&(data->fork_mutex[i]), NULL) != 0)
+		{
+			destroy_mutexes(data, i);
+			return (-1);
+		}
 		++i;
 	}
-	while (pthread_mutex_init(&data->write_lock, NULL) != 0)
-		continue ;
-	while (pthread_mutex_init(&data->eat_lock, NULL) != 0)
-		continue ;
+	return (0);
 }
 
-void	destroy_mutexes(t_data *data)
+void	destroy_mutexes(t_data *data, int length)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->philo_count)
+	while (i < length)
 	{
-		while (pthread_mutex_destroy(&(data->fork_mutex[i])) != 0)
-			continue ;
+		pthread_mutex_destroy(&(data->fork_mutex[i]));
 		++i;
 	}
-	while (pthread_mutex_destroy(&data->eat_lock) != 0)
-		continue ;
-	while (pthread_mutex_destroy(&data->write_lock) != 0)
-		continue ;
+	pthread_mutex_destroy(&data->eat_lock);
+	pthread_mutex_destroy(&data->write_lock);
 }

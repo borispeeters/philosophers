@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:34:19 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/20 00:17:08 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/21 16:52:31 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void		philo_write(t_philo *philo, char *str)
 	t_data	*data;
 
 	data = philo->data;
-	while (pthread_mutex_lock(&data->write_lock) != 0)
-		continue ;
+	pthread_mutex_lock(&data->write_lock);
 	if (data->state == ALIVE && philo->amount_eaten != data->amount_to_eat)
 	{
 		ft_putlong_fd(get_time() - data->start_time, 1);
@@ -29,8 +28,7 @@ void		philo_write(t_philo *philo, char *str)
 		write(1, str, ft_strlen(str));
 		write(1, "\n", 1);
 	}
-	while (pthread_mutex_unlock(&data->write_lock) != 0)
-		continue ;
+	pthread_mutex_unlock(&data->write_lock);
 }
 
 void		unlocked_message(char const *str)

@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:38:34 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/19 23:36:58 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/21 16:53:48 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static void	philo_drop_fork(t_philo *philo, int fork)
 	t_data	*data;
 
 	data = philo->data;
-	while (pthread_mutex_unlock(&(data->fork_mutex[fork])) != 0)
-		continue ;
+	pthread_mutex_unlock(&(data->fork_mutex[fork]));
 }
 
 static void	philo_take_fork(t_philo *philo, int fork)
@@ -26,8 +25,7 @@ static void	philo_take_fork(t_philo *philo, int fork)
 	t_data	*data;
 
 	data = philo->data;
-	while (pthread_mutex_lock(&(data->fork_mutex[fork])) != 0)
-		continue ;
+	pthread_mutex_lock(&(data->fork_mutex[fork]));
 	philo_write(philo, "has taken a fork");
 }
 
@@ -42,13 +40,11 @@ void	philo_eat(t_philo *philo)
 	data = philo->data;
 	philo_take_fork(philo, first_fork);
 	philo_take_fork(philo, second_fork);
-	while (pthread_mutex_lock(&data->eat_lock) != 0)
-		continue ;
+	pthread_mutex_lock(&data->eat_lock);
 	philo_write(philo, "is eating");
 	++philo->amount_eaten;
 	philo->last_eaten = get_time();
-	while (pthread_mutex_unlock(&data->eat_lock) != 0)
-		continue ;
+	pthread_mutex_unlock(&data->eat_lock);
 	ft_usleep(data->eat_time);
 	philo_drop_fork(philo, first_fork);
 	philo_drop_fork(philo, second_fork);
