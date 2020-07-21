@@ -98,8 +98,8 @@ void				philo_threads(t_data *data, t_philo *philo, pthread_t *pt);
 */
 
 void				ft_usleep(uint64_t wait_time);
-int					min(int lfork, int rfork);
-int					max(int lfork, int rfork);
+int					first_fork(t_philo *philo);
+int					second_fork(t_philo *philo);
 
 /*
 **	free_philo.c

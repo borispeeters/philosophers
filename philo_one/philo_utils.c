@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:42:52 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/20 00:33:16 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/07/21 23:12:26 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	ft_usleep(uint64_t wait_time)
 		usleep(100);
 }
 
-int		min(int lfork, int rfork)
+int		first_fork(t_philo *philo)
 {
-	return (lfork < rfork ? lfork : rfork);
+	return (philo->number % 2 == 0 ? philo->lfork : philo->rfork);
 }
 
-int		max(int lfork, int rfork)
+int		second_fork(t_philo *philo)
 {
-	return (lfork > rfork ? lfork : rfork);
+	return (philo->number % 2 == 0 ? philo->rfork : philo->lfork);
 }
