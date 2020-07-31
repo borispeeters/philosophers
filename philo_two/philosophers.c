@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/19 16:40:27 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 15:02:40 by bpeeters      ########   odam.nl         */
+/*   Created: 2020/07/31 14:52:03 by bpeeters      #+#    #+#                 */
+/*   Updated: 2020/07/31 20:17:28 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static void	*monitor(void *v_philo)
 	data = philo->data;
 	while (data->state == ALIVE && philo->amount_eaten != data->amount_to_eat)
 	{
-		pthread_mutex_lock(&data->eat_lock);
+		sem_wait(data->eat_lock);
 		if ((get_time() - philo->last_eaten) > data->die_time)
 		{
 			philo_write(philo, "died");
 			data->state = DEAD;
 		}
-		pthread_mutex_unlock(&data->eat_lock);
+		sem_post(data->eat_lock);
 		usleep(100);
 	}
 	return (NULL);
@@ -73,6 +73,7 @@ void		philo_threads(t_data *data, t_philo *philo, pthread_t *pt)
 			}
 			return ;
 		}
+		usleep(100);
 		++i;
 	}
 	i = 0;

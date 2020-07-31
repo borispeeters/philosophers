@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo_one
-SRC = main.c philosophers.c philo_eat.c philo_write.c philo_utils.c \
-		mutex.c get_time.c initialize.c free_philo.c utils.c
+NAME = philo_two
+SRC = main.c philosophers.c philo_eat.c philo_write.c ft_usleep.c \
+		semaphore.c get_time.c initialize.c free_philo.c utils.c
 OBJ = $(SRC:.c=.o)
 CC = clang
 CFLAGS = -Wall -Werror -Wextra

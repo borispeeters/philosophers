@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/19 14:57:52 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 11:04:29 by bpeeters      ########   odam.nl         */
+/*   Created: 2020/07/31 10:58:21 by bpeeters      #+#    #+#                 */
+/*   Updated: 2020/07/31 19:52:40 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int		main(int argc, char **argv)
 		write(2, "Failed to allocate memory\n", 26);
 		return (-1);
 	}
-	if (initiate_mutexes(&data) == 0)
+	if (open_semaphores(&data) == 0)
 	{
 		philo_threads(&data, philo, pt);
-		destroy_mutexes(&data, data.philo_count);
 	}
-	free_philo(&data, &philo, &pt);
+	close_semaphores(&data);
+	free_philo(&philo, &pt);
 	return (0);
 }

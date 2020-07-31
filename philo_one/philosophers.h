@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/19 14:55:24 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/19 14:55:24 by bpeeters      ########   odam.nl         */
+/*   Created: 2020/07/31 21:43:03 by bpeeters      #+#    #+#                 */
+/*   Updated: 2020/07/31 21:45:00 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct		s_philo
 **	utils.c
 */
 
-size_t				ft_strlen(const char *s);
-uint64_t			ft_atoi(const char *str);
+size_t				ft_strlen(char const *s);
+uint64_t			ft_atoi(char const *str);
 void				ft_putlong_fd(uint64_t n, int fd);
 
 /*
@@ -71,14 +71,16 @@ void				destroy_mutexes(t_data *data, int length);
 **	initialize.c
 */
 
-int					initialize_philo(t_data *data, t_philo **philo, pthread_t **pt);
-int					initialize_data(t_data *data, char **argv, int eat_condition);
+int					initialize_philo(t_data *data, t_philo **philo,
+									pthread_t **pt);
+int					initialize_data(t_data *data, char **argv,
+									int eat_condition);
 
 /*
 **	philo_write.c
 */
 
-void				philo_write(t_philo *philo, char *str);
+void				philo_write(t_philo *philo, char const *str);
 void				unlocked_message(char const *str);
 
 /*

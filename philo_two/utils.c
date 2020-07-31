@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/31 21:43:51 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 21:43:52 by bpeeters      ########   odam.nl         */
+/*   Created: 2020/07/31 15:31:47 by bpeeters      #+#    #+#                 */
+/*   Updated: 2020/07/31 15:39:56 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ uint64_t	ft_atoi(char const *str)
 
 size_t		ft_strlen(char const *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s[i] != '\0')
