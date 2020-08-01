@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:53:09 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 23:57:12 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 16:41:26 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_data
 	sem_t		*fork_sem;
 	sem_t		*write_lock;
 	sem_t		*eat_lock;
+	sem_t		*dead_lock;
 	t_state		state;
 	uint64_t	start_time;
 }				t_data;
@@ -44,5 +45,64 @@ typedef struct	s_philo
 	t_data		*data;
 }				t_philo;
 
+/*
+**	free_philo.c
+*/
+
+void			free_philo(t_philo **philo, pid_t **pt);
+
+/*
+**	ft_usleep.c
+*/
+
+void			ft_usleep(uint64_t wait_time);
+
+/*
+**	get_time.c
+*/
+
+uint64_t		get_time(void);
+
+/*
+**	initialize.c
+*/
+
+int				initialize_philo(t_data *data, t_philo **philo, pid_t **pt);
+int				initialize_data(t_data *data, char **argv, int eat_condition);
+
+/*
+**	philo_eat.c
+*/
+
+void			philo_eat(t_philo *philo);
+
+/*
+**	philo_write.c
+*/
+
+void			philo_write(t_philo *philo, char const *str);
+void			unlocked_message(char const *str);
+
+/*
+**	philosophers.c
+*/
+
+void			philo_process(t_data *data, t_philo *philo, pid_t *pt);
+
+/*
+**	semaphore.c
+*/
+
+int				open_semaphores(t_data *data);
+int				close_semaphores(t_data *data);
+
+/*
+**	utils.c
+*/
+
+uint64_t		ft_atoi(char const *str);
+size_t			ft_strlen(char const *s);
+void			ft_putchar_fd(char c, int fd);
+void			ft_putlong_fd(uint64_t n, int fd);
 
 #endif

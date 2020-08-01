@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 00:50:29 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 00:58:20 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 12:58:01 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 uint64_t	ft_atoi(char const *str)
 {
-	int		i	;
+	int			i;
 	long long	ans;
 	int			ncheck;
 
