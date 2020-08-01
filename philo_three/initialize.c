@@ -6,22 +6,22 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:59:49 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 12:01:54 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 20:59:50 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "philosophers.h"
 
-int			initialize_philo(t_data *data, t_philo **philo, pid_t **pt)
+int			initialize_philo(t_data *data, t_philo **philo)
 {
 	int	i;
 
-	*pt = malloc(sizeof(**pt) * data->philo_count);
+	data->pid = malloc(sizeof(*data->pid) * data->philo_count);
 	*philo = malloc(sizeof(**philo) * data->philo_count);
-	if (*pt == NULL || *philo == NULL)
+	if (data->pid == NULL || *philo == NULL)
 	{
-		free_philo(philo, pt);
+		free_philo(philo, data);
 		return (-1);
 	}
 	i = 0;

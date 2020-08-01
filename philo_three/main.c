@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:57:37 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 14:53:44 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 21:00:35 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int		main(int argc, char **argv)
 {
 	t_data	data;
 	t_philo	*philo;
-	pid_t	*pt;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -28,15 +27,15 @@ int		main(int argc, char **argv)
 	{
 		return (-1);
 	}
-	if (initialize_philo(&data, &philo, &pt) != 0)
+	if (initialize_philo(&data, &philo) != 0)
 	{
 		write(2, "Failed to allocate memory\n", 26);
 		return (-1);
 	}
 	if (open_semaphores(&data) == 0)
 	{
-		philo_process(&data, philo, pt);
+		philo_process(&data, philo);
 	}
 	close_semaphores(&data);
-	free_philo(&philo, &pt);
+	free_philo(&philo, &data);
 }

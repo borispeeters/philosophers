@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 01:08:13 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 16:45:22 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 21:29:50 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	*monitor(void *v_philo)
 		sem_wait(data->eat_lock);
 		if ((get_time() - philo->last_eaten) > data->die_time)
 		{
-			philo_write(philo, "died");
 			sem_post(data->dead_lock);
+			philo_write(philo, "died");
 			data->state = DEAD;
 		}
 		sem_post(data->eat_lock);
@@ -62,45 +62,60 @@ static void	philo_loop(t_philo *philo)
 void		*philo_dead(void * v_data)
 {
 	t_data	*data;
+	int		i;
 
 	data = (t_data*)v_data;
+	i = 0;
 	sem_wait(data->dead_lock);
+	sem_wait(data->write_lock);
+	data->state = DEAD;
+	while (i < data->philo_count)
+	{
+		kill(data->pid[i], SIGINT);
+		++i;
+	}
 	return (NULL);
 }
 
-void		philo_process(t_data *data, t_philo *philo, pid_t *pt)
+void		philo_process(t_data *data, t_philo *philo)
 {
-	int	i;
-	int	status;
+	int			i;
+	int			status;
+	pthread_t	died;
 
 	i = 0;
 	while (i < data->philo_count)
 	{
-		pt[i] = fork();
-		if (pt[i] < 0)
+		data->pid[i] = fork();
+		if (data->pid[i] < 0)
 		{
 			while (i > 0)
 			{
 				--i;
-				kill(pt[i], SIGINT);
+				kill(data->pid[i], SIGINT);
 			}
 			return ;
 		}
-		else if (pt[i] == 0)
+		else if (data->pid[i] == 0)
 		{
 			philo_loop(&philo[i]);
 		}
 		++i;
 	}
+	if (pthread_create(&died, NULL, philo_dead, data) != 0)
+		;
+	pthread_detach(died);
 	i = 0;
 	while (i < data->philo_count)
 	{
-		if (pt[i] > 0)
+		if (data->pid[i] > 0)
 		{
-			waitpid(pt[i], &status, WUNTRACED);
+			waitpid(data->pid[i], &status, WUNTRACED);
 			if (!WIFEXITED(status) && !WIFSIGNALED(status))
 				continue ;
 		}
 		++i;
 	}
+	if (data->state != DEAD)
+		unlocked_message("All philosophers have eaten enough!");
 }

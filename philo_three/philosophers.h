@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:53:09 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 16:41:26 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 21:02:33 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_data
 	sem_t		*write_lock;
 	sem_t		*eat_lock;
 	sem_t		*dead_lock;
+	pid_t		*pid;
 	t_state		state;
 	uint64_t	start_time;
 }				t_data;
@@ -49,7 +50,7 @@ typedef struct	s_philo
 **	free_philo.c
 */
 
-void			free_philo(t_philo **philo, pid_t **pt);
+void			free_philo(t_philo **philo, t_data *data);
 
 /*
 **	ft_usleep.c
@@ -67,7 +68,7 @@ uint64_t		get_time(void);
 **	initialize.c
 */
 
-int				initialize_philo(t_data *data, t_philo **philo, pid_t **pt);
+int				initialize_philo(t_data *data, t_philo **philo);
 int				initialize_data(t_data *data, char **argv, int eat_condition);
 
 /*
@@ -87,7 +88,7 @@ void			unlocked_message(char const *str);
 **	philosophers.c
 */
 
-void			philo_process(t_data *data, t_philo *philo, pid_t *pt);
+void			philo_process(t_data *data, t_philo *philo);
 
 /*
 **	semaphore.c
