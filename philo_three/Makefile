@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 NAME = philo_three
-SRC = main.c philosophers.c philo_eat.c philo_write.c ft_usleep.c \
-		semaphore.c get_time.c initialize.c free_philo.c utils.c
+SRC = main.c philosophers.c philo_eat.c philo_loop.c philo_write.c \
+		ft_usleep.c semaphore.c get_time.c initialize.c free_philo.c utils.c
 OBJ = $(SRC:.c=.o)
 CC = clang
 CFLAGS = -Wall -Werror -Wextra

@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:53:09 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 21:02:33 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 23:30:40 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int				initialize_data(t_data *data, char **argv, int eat_condition);
 */
 
 void			philo_eat(t_philo *philo);
+
+/*
+**	philo_loop.c
+*/
+
+void			philo_loop(t_philo *philo);
 
 /*
 **	philo_write.c

@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:59:49 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 20:59:50 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 22:03:25 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			initialize_philo(t_data *data, t_philo **philo)
 	{
 		(*philo)[i].data = data;
 		(*philo)[i].number = i + 1;
-		(*philo)[i]. amount_eaten = 0;
+		(*philo)[i].amount_eaten = 0;
 		++i;
 	}
 	return (0);
