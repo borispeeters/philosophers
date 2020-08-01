@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 01:08:13 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 23:29:11 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 23:37:08 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static int	philo_fork(t_data *data, t_philo *philo)
 			return (kill_children(data, i));
 		else if (data->pid[i] == 0)
 			philo_loop(&philo[i]);
+		usleep(100);
 		++i;
 	}
 	return (0);
