@@ -5,24 +5,23 @@
 /*                                                     +:+                    */
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/19 16:30:45 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 12:01:03 by bpeeters      ########   odam.nl         */
+/*   Created: 2020/07/31 23:59:49 by bpeeters      #+#    #+#                 */
+/*   Updated: 2020/08/01 12:01:54 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "philosophers.h"
 
-int			initialize_philo(t_data *data, t_philo **philo, pthread_t **pt)
+int			initialize_philo(t_data *data, t_philo **philo, pid_t **pt)
 {
 	int	i;
 
 	*pt = malloc(sizeof(**pt) * data->philo_count);
-	data->fork_mutex = malloc(sizeof(*data->fork_mutex) * data->philo_count);
 	*philo = malloc(sizeof(**philo) * data->philo_count);
-	if (*pt == NULL || data->fork_mutex == NULL || *philo == NULL)
+	if (*pt == NULL || *philo == NULL)
 	{
-		free_philo(data, philo, pt);
+		free_philo(philo, pt);
 		return (-1);
 	}
 	i = 0;
@@ -30,9 +29,7 @@ int			initialize_philo(t_data *data, t_philo **philo, pthread_t **pt)
 	{
 		(*philo)[i].data = data;
 		(*philo)[i].number = i + 1;
-		(*philo)[i].lfork = i;
-		(*philo)[i].rfork = (i + 1) % data->philo_count;
-		(*philo)[i].amount_eaten = 0;
+		(*philo)[i]. amount_eaten = 0;
 		++i;
 	}
 	return (0);

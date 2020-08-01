@@ -6,12 +6,12 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:28:39 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/21 17:08:54 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 12:00:12 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
 #include <pthread.h>
+#include "philosophers.h"
 
 int		initiate_mutexes(t_data *data)
 {

@@ -5,20 +5,18 @@
 /*                                                     +:+                    */
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/31 10:58:21 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 12:01:30 by bpeeters      ########   odam.nl         */
+/*   Created: 2020/07/31 23:57:37 by bpeeters      #+#    #+#                 */
+/*   Updated: 2020/08/01 00:24:07 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <unistd.h>
 #include "philosophers.h"
 
 int		main(int argc, char **argv)
 {
-	t_data		data;
-	t_philo		*philo;
-	pthread_t	*pt;
+	t_data	*data;
+	t_philo	*philo;
+	pid_t	*pt;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -40,5 +38,4 @@ int		main(int argc, char **argv)
 	}
 	close_semaphores(&data);
 	free_philo(&philo, &pt);
-	return (0);
 }

@@ -6,12 +6,12 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 11:06:03 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 16:15:58 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 12:01:23 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
 #include <stdlib.h>
+#include "philosophers.h"
 
 int			initialize_philo(t_data *data, t_philo **philo, pthread_t **pt)
 {

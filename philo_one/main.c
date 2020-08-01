@@ -6,13 +6,13 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 14:57:52 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 11:04:29 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/01 12:00:58 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
 #include <pthread.h>
 #include <unistd.h>
+#include "philosophers.h"
 
 int		main(int argc, char **argv)
 {
