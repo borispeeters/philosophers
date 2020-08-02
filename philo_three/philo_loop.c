@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 22:18:28 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 22:29:16 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/08/02 12:13:44 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	*monitor(void *v_philo)
 		{
 			sem_post(data->dead_lock);
 			philo_write(philo, "died");
+			data->state = DEAD;
 			break ;
 		}
 		sem_post(data->eat_lock);
@@ -47,7 +48,7 @@ void		philo_loop(t_philo *philo)
 	philo->last_eaten = get_time();
 	if (pthread_create(&pid, NULL, monitor, philo) != 0)
 		exit(1);
-	while (philo->amount_eaten != data->amount_to_eat)
+	while (data->state != DEAD && philo->amount_eaten != data->amount_to_eat)
 	{
 		philo_write(philo, "is thinking");
 		philo_eat(philo);
