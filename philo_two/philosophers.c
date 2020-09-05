@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 14:52:03 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 20:17:28 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/05 23:09:35 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ static void	*monitor(void *v_philo)
 
 	philo = (t_philo*)v_philo;
 	data = philo->data;
-	while (data->state == ALIVE && philo->amount_eaten != data->amount_to_eat)
+	while (philo->amount_eaten != data->amount_to_eat)
 	{
 		sem_wait(data->eat_lock);
+		if (data->state == DEAD)
+		{
+			sem_post(data->eat_lock);
+			break ;
+		}
 		if ((get_time() - philo->last_eaten) > data->die_time)
 		{
 			philo_write(philo, "died");

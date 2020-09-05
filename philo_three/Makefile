@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 NAME = philo_three
+DEBUG = debug
 SRC = main.c philosophers.c philo_eat.c philo_loop.c philo_write.c \
 		ft_usleep.c semaphore.c get_time.c initialize.c free_philo.c utils.c
 OBJ = $(SRC:.c=.o)
@@ -23,6 +24,9 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) -o $(NAME) -pthread
 
+debug: $(OBJ)
+	$(CC) $(OBJ) -o $(DEBUG) -g -fsanitize=thread
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $? -o $@
 
@@ -31,5 +35,6 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(DEBUG)
 
 re: fclean all
