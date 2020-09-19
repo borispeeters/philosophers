@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 01:08:13 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/09/19 23:54:42 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:20:44 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	kill_children(t_data *data, int amount)
 		--amount;
 		kill(data->pid[amount], SIGINT);
 	}
-	return (-1);
+	return (1);
 }
 
 static int	philo_fork(t_data *data, t_philo *philo)

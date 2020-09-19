@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:28:39 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 12:00:12 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:20:31 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ int		initiate_mutexes(t_data *data)
 
 	i = 0;
 	if (pthread_mutex_init(&data->write_lock, NULL) != 0)
-		return (-1);
+		return (1);
 	if (pthread_mutex_init(&data->eat_lock, NULL) != 0)
 	{
 		pthread_mutex_destroy(&data->write_lock);
-		return (-1);
+		return (1);
 	}
 	while (i < data->philo_count)
 	{
 		if (pthread_mutex_init(&(data->fork_mutex[i]), NULL) != 0)
 		{
 			destroy_mutexes(data, i);
-			return (-1);
+			return (1);
 		}
 		++i;
 	}
