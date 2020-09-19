@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:57:37 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 22:31:26 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:15:40 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ int		main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		write(2, "Invalid number of arguments\n", 28);
-		return (-1);
+		write(STDERR_FILENO, "Invalid number of arguments\n", 28);
+		return (1);
 	}
 	if (initialize_data(&data, argv, argc == 6) != 0)
 	{
-		return (-1);
+		return (1);
 	}
 	if (initialize_philo(&data, &philo) != 0)
 	{
-		write(2, "Failed to allocate memory\n", 26);
-		return (-1);
+		write(STDERR_FILENO, "Failed to allocate memory\n", 26);
+		return (1);
 	}
 	if (open_semaphores(&data) == 0)
 	{

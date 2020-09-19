@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 14:47:56 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/09/20 00:02:04 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:16:29 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	philo_write(t_philo *philo, char const *str)
 	sem_wait(data->write_lock);
 	if (philo->amount_eaten != data->amount_to_eat)
 	{
-		ft_putlong_fd(get_time() - data->start_time, 1);
-		write(1, "\t", 1);
-		ft_putlong_fd(philo->number, 1);
-		write(1, " ", 1);
-		write(1, str, ft_strlen(str));
-		write(1, "\n", 1);
+		ft_putlong_fd(get_time() - data->start_time, STDOUT_FILENO);
+		write(STDOUT_FILENO, "\t", 1);
+		ft_putlong_fd(philo->number, STDOUT_FILENO);
+		write(STDOUT_FILENO, " ", 1);
+		write(STDOUT_FILENO, str, ft_strlen(str));
+		write(STDOUT_FILENO, "\n", 1);
 	}
 	if (data->state != DEAD)
 		sem_post(data->write_lock);
@@ -34,6 +34,6 @@ void	philo_write(t_philo *philo, char const *str)
 
 void	unlocked_message(char const *str)
 {
-	write(1, str, ft_strlen(str));
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, str, ft_strlen(str));
+	write(STDOUT_FILENO, "\n", 1);
 }

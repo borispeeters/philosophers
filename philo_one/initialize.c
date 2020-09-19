@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/19 16:30:45 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 12:01:03 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:18:25 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			initialize_philo(t_data *data, t_philo **philo, pthread_t **pt)
 	if (*pt == NULL || data->fork_mutex == NULL || *philo == NULL)
 	{
 		free_philo(data, philo, pt);
-		return (-1);
+		return (1);
 	}
 	i = 0;
 	while (i < data->philo_count)
@@ -43,17 +43,17 @@ static int	verify_data(t_data *data, int eat_condition)
 	if (data->philo_count < 2)
 	{
 		unlocked_message("At least 2 philosophers are required.");
-		return (-1);
+		return (1);
 	}
 	if (data->die_time <= 0 || data->eat_time <= 0 || data->sleep_time <= 0)
 	{
 		unlocked_message("Please enter a positive timestamp.");
-		return (-1);
+		return (1);
 	}
 	if (eat_condition && data->amount_to_eat < 0)
 	{
 		unlocked_message("A philosopher needs to eat a positive amount.");
-		return (-1);
+		return (1);
 	}
 	return (0);
 }
