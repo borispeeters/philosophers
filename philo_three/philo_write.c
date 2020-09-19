@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 14:47:56 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 21:48:52 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:02:04 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	philo_write(t_philo *philo, char const *str)
 
 	data = philo->data;
 	sem_wait(data->write_lock);
-	if (data->state == ALIVE && philo->amount_eaten != data->amount_to_eat)
+	if (philo->amount_eaten != data->amount_to_eat)
 	{
 		ft_putlong_fd(get_time() - data->start_time, 1);
 		write(1, "\t", 1);
@@ -28,7 +28,8 @@ void	philo_write(t_philo *philo, char const *str)
 		write(1, str, ft_strlen(str));
 		write(1, "\n", 1);
 	}
-	sem_post(data->write_lock);
+	if (data->state != DEAD)
+		sem_post(data->write_lock);
 }
 
 void	unlocked_message(char const *str)

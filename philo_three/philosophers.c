@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 01:08:13 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/08/01 23:37:08 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/19 23:54:42 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	*philo_dead(void *v_data)
 		kill(data->pid[i], SIGINT);
 		++i;
 	}
+	if (data->state != DEAD)
+		sem_post(data->write_lock);
 	data->state = DEAD;
 	return (NULL);
 }

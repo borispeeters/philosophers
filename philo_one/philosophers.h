@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 21:43:03 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 21:45:00 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:04:57 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ typedef enum		e_state
 typedef struct		s_data
 {
 	int				philo_count;
-	uint64_t		die_time;
-	uint64_t		eat_time;
-	uint64_t		sleep_time;
+	int64_t			die_time;
+	int64_t			eat_time;
+	int64_t			sleep_time;
 	int				amount_to_eat;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	write_lock;
@@ -51,7 +51,7 @@ typedef struct		s_philo
 */
 
 size_t				ft_strlen(char const *s);
-uint64_t			ft_atoi(char const *str);
+int64_t				ft_atoi(char const *str);
 void				ft_putlong_fd(uint64_t n, int fd);
 
 /*

@@ -6,14 +6,14 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 21:43:51 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/07/31 21:43:52 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:07:55 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <unistd.h>
 
-uint64_t	ft_atoi(char const *str)
+int64_t		ft_atoi(char const *str)
 {
 	int			i;
 	long long	ans;
@@ -52,7 +52,7 @@ size_t		ft_strlen(char const *s)
 	return (i);
 }
 
-void		ft_putchar_fd(char c, int fd)
+static void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 14:52:03 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/09/05 23:09:35 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 00:08:22 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	*monitor(void *v_philo)
 			sem_post(data->eat_lock);
 			break ;
 		}
-		if ((get_time() - philo->last_eaten) > data->die_time)
+		if ((get_time() - philo->last_eaten) > (uint64_t)data->die_time)
 		{
 			philo_write(philo, "died");
 			data->state = DEAD;
