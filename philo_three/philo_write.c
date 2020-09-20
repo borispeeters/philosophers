@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 14:47:56 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/09/20 00:16:29 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 17:19:57 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	philo_write(t_philo *philo, char const *str)
 		write(STDOUT_FILENO, str, ft_strlen(str));
 		write(STDOUT_FILENO, "\n", 1);
 	}
-	if (data->state != DEAD)
+	if (ft_strcmp(str, "died") != 0)
 		sem_post(data->write_lock);
 }
 

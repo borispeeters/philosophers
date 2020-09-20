@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/31 23:53:09 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/09/20 00:06:29 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 17:19:36 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ int				close_semaphores(t_data *data);
 int64_t			ft_atoi(char const *str);
 size_t			ft_strlen(char const *s);
 void			ft_putlong_fd(uint64_t n, int fd);
+int				ft_strcmp(char const *s1, char const *s2);
 
 #endif

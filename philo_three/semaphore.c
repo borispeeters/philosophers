@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 01:02:38 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/09/20 00:20:42 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 15:20:13 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		open_semaphores(t_data *data)
 	sem_unlink("/dead_lock");
 	sem_unlink("/fork_sem");
 	if (data->write_lock == SEM_FAILED || data->eat_lock == SEM_FAILED
-		|| data->fork_sem == SEM_FAILED)
+		|| data->fork_sem == SEM_FAILED || data->dead_lock == SEM_FAILED)
 	{
 		return (1);
 	}

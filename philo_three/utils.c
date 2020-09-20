@@ -6,7 +6,7 @@
 /*   By: bpeeters <bpeeters@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/01 00:50:29 by bpeeters      #+#    #+#                 */
-/*   Updated: 2020/09/20 00:06:14 by bpeeters      ########   odam.nl         */
+/*   Updated: 2020/09/20 17:28:26 by bpeeters      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,14 @@ void		ft_putlong_fd(uint64_t n, int fd)
 	if (n > 9)
 		ft_putlong_fd(n / 10, fd);
 	ft_putchar_fd(n % 10 + '0', fd);
+}
+
+int			ft_strcmp(char const *s1, char const *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && (unsigned char)s1[i] == (unsigned char)s2[i])
+		++i;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
